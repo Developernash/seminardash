@@ -2,8 +2,5 @@ dash
 pandas
 numpy
 plotly
-requests
 matplotlib
-seaborn
-os
 gunicorn
