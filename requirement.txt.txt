@@ -1,0 +1,11 @@
+dash
+pandas
+numpy
+plotly
+requests
+matplotlib
+seaborn
+dstapi
+math
+os
+gunicorn

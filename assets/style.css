@@ -1,0 +1,405 @@
+/* ===========================
+   Dash Starter Design System
+   ===========================
+   - Beautiful defaults for most Dash apps
+   - Light/Dark theme via CSS variables
+   - Works with dcc.Dropdown (react-select), dash-table, Plotly graphs
+*/
+
+/* ---------- 1) Design Tokens (CSS Variables) ---------- */
+
+:root {
+  /* Palette (Light) */
+  --bg: #f7f8fb;
+  --panel: #ffffff;
+  --muted: #f0f2f7;
+  --text: #0f172a;          /* slate-900 */
+  --text-muted: #475569;    /* slate-600 */
+  --primary: #2563eb;       /* blue-600 */
+  --primary-cta: #1d4ed8;   /* blue-700 */
+  --accent: #22c55e;        /* green-500 */
+  --warn: #f59e0b;          /* amber-500 */
+  --danger: #ef4444;        /* red-500 */
+  --link: #0ea5e9;          /* sky-500 */
+
+  /* Surfaces & borders */
+  --border: #e5e7eb;
+  --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 6px 18px rgba(15, 23, 42, 0.10);
+  --shadow-lg: 0 14px 40px rgba(15, 23, 42, 0.14);
+
+  /* Radii & spacing & typography scale */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-8: 48px;
+
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, Inter, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+  --fs-xs: 12px;
+  --fs-sm: 13.5px;
+  --fs-md: 15px;
+  --fs-lg: 18px;
+  --fs-xl: 22px;
+  --fs-2xl: 28px;
+  --fs-3xl: 36px;
+
+  /* Transitions */
+  --ease: cubic-bezier(.2,.8,.2,1);
+  --fast: 120ms;
+  --slow: 260ms;
+}
+
+/* Prefer dark if OS is dark, but you can override by putting class="light" or class="dark" on <body> */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0b132b;          /* deep navy */
+    --panel: #111827;       /* gray-900 */
+    --muted: #0f172a;       /* slate-900 */
+    --text: #e5e7eb;        /* gray-200 */
+    --text-muted: #9ca3af;  /* gray-400 */
+    --primary: #60a5fa;     /* blue-400 */
+    --primary-cta: #3b82f6; /* blue-500 */
+    --accent: #34d399;      /* emerald-400 */
+    --warn: #fbbf24;        /* amber-400 */
+    --danger: #f87171;      /* red-400 */
+    --link: #38bdf8;        /* sky-400 */
+    --border: #1f2937;      /* gray-800 */
+    --shadow-sm: 0 2px 8px rgba(0,0,0,.25);
+    --shadow-md: 0 6px 18px rgba(0,0,0,.35);
+    --shadow-lg: 0 14px 40px rgba(0,0,0,.45);
+  }
+}
+body.light {
+  /* force light */
+}
+body.dark {
+  --bg: #0b132b;
+  --panel: #111827;
+  --muted: #0f172a;
+  --text: #e5e7eb;
+  --text-muted: #9ca3af;
+  --primary: #60a5fa;
+  --primary-cta: #3b82f6;
+  --accent: #34d399;
+  --warn: #fbbf24;
+  --danger: #f87171;
+  --link: #38bdf8;
+  --border: #1f2937;
+  --shadow-sm: 0 2px 8px rgba(0,0,0,.25);
+  --shadow-md: 0 6px 18px rgba(0,0,0,.35);
+  --shadow-lg: 0 14px 40px rgba(0,0,0,.45);
+}
+
+/* ---------- 2) Base styles ---------- */
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--fs-md);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* #react-entry-point, #_dash-app-content, #_dash-app-content > div {
+  min-height: 100%;
+} */
+
+a { color: var(--link); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+img { max-width: 100%; display: block; }
+
+/* ---------- 3) Layout helpers ---------- */
+
+.container {
+  width: min(1200px, 92vw);
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-4);
+}
+
+.row { display: flex; gap: var(--space-4); flex-wrap: wrap; }
+.col { flex: 1 1 0; min-width: 260px; }
+
+.section { padding: var(--space-6) 0; }
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-5);
+  transition: transform var(--slow) var(--ease), box-shadow var(--slow) var(--ease);
+}
+.card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+
+.header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: var(--space-4);
+}
+
+/* ---------- 4) Typography ---------- */
+
+h1, h2, h3, h4 {
+  margin: 0 0 var(--space-3);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+h1 { font-size: var(--fs-3xl); }
+h2 { font-size: var(--fs-2xl); }
+h3 { font-size: var(--fs-xl); }
+h4 { font-size: var(--fs-lg); }
+
+p { margin: 0 0 var(--space-3); color: var(--text); }
+.muted { color: var(--text-muted); }
+.code { font-family: var(--font-mono); background: var(--muted); padding: 2px 6px; border-radius: var(--radius-sm); }
+
+/* ---------- 5) Controls: buttons, inputs, dropdowns ---------- */
+
+button, .btn {
+  appearance: none;
+  border: 1px solid transparent;
+  background: var(--primary);
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: background var(--fast) var(--ease), transform var(--fast) var(--ease), box-shadow var(--fast) var(--ease);
+}
+button:hover, .btn:hover { background: var(--primary-cta); box-shadow: var(--shadow-md); transform: translateY(-1px); }
+button:active, .btn:active { transform: translateY(0); }
+
+.btn--ghost {
+  background: transparent;
+  color: var(--primary);
+  border-color: var(--primary);
+}
+.btn--danger { background: var(--danger); }
+.btn--warn { background: var(--warn); color: #111; }
+.btn--accent { background: var(--accent); color: #111; }
+
+input[type="text"], input[type="number"], input[type="search"], .dash-input, textarea {
+  width: 100%;
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  outline: none;
+  transition: border var(--fast) var(--ease), box-shadow var(--fast) var(--ease);
+}
+input:focus, textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--primary) 25%, transparent);
+}
+
+/* dcc.Dropdown (react-select) */
+.Select-control {
+  background: var(--panel) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-md) !important;
+  color: var(--text) !important;
+  min-height: 42px !important;
+  box-shadow: none !important;
+}
+.Select-control:hover { border-color: var(--primary) !important; }
+.Select--single > .Select-control .Select-value,
+.Select-placeholder { color: var(--text-muted) !important; }
+.Select-menu-outer {
+  background: var(--panel) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: var(--shadow-md) !important;
+}
+.VirtualizedSelectOption {
+  color: var(--text) !important;
+  background: var(--panel) !important;
+}
+.VirtualizedSelectFocusedOption { background: color-mix(in oklab, var(--primary) 20%, var(--panel)); color: var(--text); }
+
+/* dcc.DatePickerSingle/Range */
+.DateInput_input, .DateInput_input_1 {
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+/* ---------- 6) Tables (dash-table) ---------- */
+
+dash-table, .dash-table-container {
+  width: 100%;
+}
+.dash-table-container .row {
+  margin: 0;
+}
+.dash-table-container .dash-spreadsheet-container {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+.dash-table-container .dash-spreadsheet-inner table {
+  background: var(--panel);
+  color: var(--text);
+}
+.dash-table-container .dash-header {
+  background: var(--muted) !important;
+  color: var(--text);
+  font-weight: 700;
+}
+.dash-table-container .dash-cell {
+  border-color: var(--border) !important;
+}
+.dash-table-container .dash-cell.focused {
+  outline: 2px solid var(--primary) !important;
+  outline-offset: -1px;
+}
+
+/* ---------- 7) Plotly Graphs ---------- */
+
+.js-plotly-plot .plotly .main-svg {
+  background: transparent !important;
+}
+.js-plotly-plot .plot-container {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-3);
+}
+.js-plotly-plot .legend {
+  text-transform: none;
+}
+.modebar { background: transparent !important; }
+.modebar-btn { filter: brightness(0.9); }
+.modebar-btn:hover { filter: brightness(1.1); }
+
+/* ---------- 8) Tabs, Checklists, Radios ---------- */
+
+.tab, .dash-tabs .tab {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  margin-right: var(--space-2);
+}
+.tab--selected, .dash-tabs .tab--selected {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 2px color-mix(in oklab, var(--primary) 40%, transparent);
+}
+
+input[type="checkbox"], input[type="radio"] { accent-color: var(--primary); }
+
+/* ---------- 9) Alerts & Badges ---------- */
+
+.alert {
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  background: var(--muted);
+}
+.alert--warn { border-color: var(--warn); background: color-mix(in oklab, var(--warn) 20%, var(--muted)); }
+.alert--danger { border-color: var(--danger); background: color-mix(in oklab, var(--danger) 20%, var(--muted)); }
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: var(--fs-xs);
+  background: var(--muted);
+  color: var(--text-muted);
+}
+
+/* ---------- 10) Modals & Tooltips ---------- */
+
+.modal-backdrop {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.45);
+}
+.modal {
+  position: fixed; inset: 10% 50% auto 50%;
+  transform: translate(-50%, 0);
+  width: min(720px, 92vw);
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-6);
+}
+
+.tooltip {
+  position: relative;
+}
+.tooltip:hover::after {
+  content: attr(data-tip);
+  position: absolute;
+  top: 100%; left: 50%; transform: translate(-50%, 8px);
+  white-space: nowrap;
+  background: var(--text);
+  color: var(--bg);
+  padding: 6px 8px;
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-xs);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ---------- 11) Utilities ---------- */
+
+.hidden { display: none !important; }
+.center { text-align: center; }
+.right { text-align: right; }
+.flex { display: flex; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.gap-2 { gap: var(--space-2); }
+.gap-4 { gap: var(--space-4); }
+.gap-6 { gap: var(--space-6); }
+.p-4 { padding: var(--space-4); }
+.p-5 { padding: var(--space-5); }
+.mt-4 { margin-top: var(--space-4); }
+.mb-4 { margin-bottom: var(--space-4); }
+.rounded { border-radius: var(--radius-md); }
+.shadow { box-shadow: var(--shadow-sm); }
+
+.hr {
+  height: 1px; background: var(--border); border: 0; margin: var(--space-5) 0;
+}
+
+/* ---------- 12) Responsive ---------- */
+
+@media (max-width: 900px) {
+  .row { flex-direction: column; }
+  .container { width: 94vw; }
+  h1 { font-size: 30px; }
+  h2 { font-size: 24px; }
+}
+
+/* ---------- 13) Nice focus states for accessibility ---------- */
+
+:focus-visible {
+  outline: 3px solid color-mix(in oklab, var(--primary) 45%, transparent);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* ---------- 14) Loading state polish ---------- */
+._dash-loading {
+  opacity: .6;
+  transition: opacity var(--slow) var(--ease);
+}
