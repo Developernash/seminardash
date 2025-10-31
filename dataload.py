@@ -35,15 +35,15 @@ cpi = org_dataset.copy()
 cpi['TID'] = pd.to_datetime(cpi['TID'].str.replace('M',''), format='%Y%m').dt.to_period('M')
 cpi = cpi.sort_values(by='TID', ascending=True).reset_index(drop=True)
 cpi['INDHOLD'] = cpi['INDHOLD'].str.replace(',', '.')
-cpi['INDHOLD'] = pd.to_numeric(cpi['INDHOLD'])
-cpijan2020 = cpi.loc[cpi['TID'] == pd.Period('2020-01', freq='M'), 'INDHOLD'].values[0]
-cpi['2020indeks'] = cpi['INDHOLD'] / cpijan2020 * 100
-cpi['pi_t'] = cpi['2020indeks'].pct_change(periods=1)
-cpi['pi^12_t'] = cpi['2020indeks'].pct_change(periods=12)
+cpi['Inflation (level)'] = pd.to_numeric(cpi['INDHOLD'])
+cpijan2020 = cpi.loc[cpi['TID'] == pd.Period('2020-01', freq='M'), 'Inflation (level)'].values[0]
+cpi['Inflation (level 2020=100)'] = cpi['INDHOLD'] / cpijan2020 * 100
+cpi['Inflation (Monthly)'] = cpi['Inflation (level 2020=100)'].pct_change(periods=1)
+cpi['Inflation (YoY)'] = cpi['nflation (level 2020=100)'].pct_change(periods=12)
 
 cpi = cpi.melt(
     id_vars=['TID'],
-    value_vars=['INDHOLD', '2020indeks', 'pi_t', 'pi^12_t'],
+    value_vars=['INDHOLD', 'Inflation (level)', 'Inflation(Monthly)', 'Inflation (YoY)'],
     var_name='Variable',
     value_name='Value'
 ).sort_values(['TID', 'Variable']).reset_index(drop=True)

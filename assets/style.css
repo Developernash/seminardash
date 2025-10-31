@@ -13,9 +13,9 @@
   --bg: #f7f8fb;
   --panel: #ffffff;
   --muted: #f0f2f7;
-  --text: #0f172a;          /* slate-900 */
-  --text-muted: #475569;    /* slate-600 */
-  --primary: #2563eb;       /* blue-600 */
+  --text: #fffff0;          /* slate-900 */
+  --text-muted: #fffff0;    /* slate-600 */
+  --primary: #fffff0;       /* blue-600 */
   --primary-cta: #1d4ed8;   /* blue-700 */
   --accent: #22c55e;        /* green-500 */
   --warn: #f59e0b;          /* amber-500 */
@@ -64,7 +64,7 @@
     --panel: #111827;       /* gray-900 */
     --muted: #0f172a;       /* slate-900 */
     --text: #e5e7eb;        /* gray-200 */
-    --text-muted: #9ca3af;  /* gray-400 */
+    --text-muted: #fffff0;  /* gray-400 */
     --primary: #60a5fa;     /* blue-400 */
     --primary-cta: #3b82f6; /* blue-500 */
     --accent: #34d399;      /* emerald-400 */
@@ -85,7 +85,7 @@ body.dark {
   --panel: #111827;
   --muted: #0f172a;
   --text: #e5e7eb;
-  --text-muted: #9ca3af;
+  --text-muted: #fffff0;
   --primary: #60a5fa;
   --primary-cta: #3b82f6;
   --accent: #34d399;
@@ -276,13 +276,51 @@ dash-table, .dash-table-container {
 .js-plotly-plot .plotly .main-svg {
   background: transparent !important;
 }
+/* Make graphs expand to card width */
+.dash-graph, .js-plotly-plot { width: 100% !important; }
+/* Avoid sizing changes on Plotly's internal container to prevent resize loops */
 .js-plotly-plot .plot-container {
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
-  padding: var(--space-3);
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
 }
+/* Chart title */
+.js-plotly-plot .gtitle,
+.js-plotly-plot .gtitle tspan {
+  fill: #fffff0 !important;
+}
+
+/* Axis titles (x & y) */
+.js-plotly-plot .g-xtitle text,
+.js-plotly-plot .g-xtitle tspan,
+.js-plotly-plot .g-ytitle text,
+.js-plotly-plot .g-ytitle tspan {
+  fill: #fffff0 !important;
+}
+
+/* Axis tick labels */
+.js-plotly-plot .xtick text,
+.js-plotly-plot .ytick text {
+  fill: #fffff0 !important;
+}
+
+/* (Optional) Axis lines & tick marks */
+.js-plotly-plot .xaxis path,
+.js-plotly-plot .yaxis path,
+.js-plotly-plot .xaxislayer-above .tick line,
+.js-plotly-plot .yaxislayer-above .tick line {
+  stroke: #fffff0 !important;
+}
+
+/* (Optional) Grid lines, if you want them tinted too */
+.js-plotly-plot .xgrid,
+.js-plotly-plot .ygrid {
+  stroke: #ff006e33 !important; /* 20% opacity */
+}
+
+
 .js-plotly-plot .legend {
   text-transform: none;
 }
