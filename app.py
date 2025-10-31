@@ -1,6 +1,7 @@
 from dash import Dash, html, dcc, callback, Output, Input
 import plotly.express as px
 import pandas as pd
+import numpy as np
 
 df = pd.read_csv('cpi.csv')
 
@@ -63,13 +64,15 @@ app.layout = html.Div(
     Input('dropdown-selection', 'value')
 )
 def update_graphs(value):
-    dff = df[df.Variable == value]
+    dff = df[df.Variable == value].copy()
+    vals = dff['Value'].astype(float).dropna()
 
-    # No figure-level theming or colors here; let CSS style containers.
-    fig1 = px.line(dff, x='TID', y='Value', title='Inflation over tid')
-    fig2 = px.bar(dff, x='TID', y='Value', title='Søjlediagram af inflation')
+    # --- build figures
+    fig1 = px.line(dff, x='TID', y='Value', title='Inflation over tid', )
+    fig2 = px.bar(dff,  x='TID', y='Value', title='Søjlediagram af inflation')
 
     return fig1, fig2
+
 
 if __name__ == '__main__':
     app.run(debug=True)
