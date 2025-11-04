@@ -10,20 +10,20 @@ server = app.server
 
 # (Optional) Force dark or light theme via body class used by style.css variables.
 # Comment out if you prefer OS auto (prefers-color-scheme).
-app.index_string = """
-<!DOCTYPE html>
-<html>
-  <head>{%metas%}{%favicon%}{%css%}</head>
-  <body class="dark">
-    <div id="react-entry-point">
-      {%app_entry%}
-    </div>
-    <footer>
-      {%config%}{%scripts%}{%renderer%}
-    </footer>
-  </body>
-</html>
-"""
+# app.index_string = """
+# <!DOCTYPE html>
+# <html>
+#   <head>{%metas%}{%favicon%}{%css%}</head>
+#   <body class="dark">
+#     <div id="react-entry-point">
+#       {%app_entry%}
+#     </div>
+#     <footer>
+#       {%config%}{%scripts%}{%renderer%}
+#     </footer>
+#   </body>
+# </html>
+# """
 
 app.layout = html.Div(
     className="container",
